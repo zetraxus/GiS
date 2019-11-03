@@ -1,38 +1,41 @@
-GRAPH = []  # adjacency list
-
-CV = 1
-# D - list of DFS-number for every V
 
 
-def DFSTarjan(v, parent, graph, D, mosts):
-    global CV
-    D[v] = CV
-    Low = CV
-    CV += 1
+class TarjanAlgorithm(object):
+    def __init__(self, graph):
+        self._graph = graph  # adjacency list
+        self._length = len(graph)
+        self._bridges = []
 
-    for u in graph[v]:
-        if u == parent:
-            continue
-        if D[u] == 0:
-            tmp = DFSTarjan(u, v, graph, D, mosts)
-            if tmp < Low:
-                Low = tmp
-        elif D[u] < Low:
-            Low = D[u]
-    if parent > -1 and Low == D[v]:
-        mosts.append((parent, v))
-    return Low
+    def run(self):
+        self._bridges = []
+        self._dfs_numbers = [0] * self._length
 
+        for i in range(self._length):
+            if self._dfs_numbers[i] == 0:
+                self._counter = 1
+                self._dfs_tarjan(i, -1)
 
-def find_mosts(graph):
-    global CV
-    D = [0] * len(graph)
-    mosts = []
-    for i in range(len(graph)):
-        if D[i] == 0:
-            CV = 1
-            DFSTarjan(i, -1, graph, D, mosts)
-    return mosts
+    def _dfs_tarjan(self, v, parent):
+        self._dfs_numbers[v] = self._counter
+        low = self._counter
+        self._counter += 1
+
+        for u in self._graph[v]:
+            if u == parent:
+                continue
+            if self._dfs_numbers[u] == 0:
+                tmp = self._dfs_tarjan(u, v)
+                if tmp < low:
+                    low = tmp
+            elif self._dfs_numbers[u] < low:
+                low = self._dfs_numbers[u]
+        if parent > -1 and low == self._dfs_numbers[v]:
+            self._bridges.append((parent, v))
+        return low
+
+    @property
+    def bridges(self):
+        return self._bridges
 
 
 if __name__ == "__main__":
@@ -54,4 +57,6 @@ if __name__ == "__main__":
              [10, 11, 12],  # 15
              [13, 14],  # 16
              ]
-    print (find_mosts(graph))
+    obj = TarjanAlgorithm(graph)
+    obj.run()
+    print(obj.bridges)
