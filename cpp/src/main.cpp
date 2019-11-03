@@ -3,7 +3,23 @@
 #include <algorithm>
 #include "Graph.h"
 
-typedef std::pair<uint, uint> puu;
+const uint SUCCESS = 1;
+const uint FAILED = 0;
+
+int openFiles(int argc, char **argv, std::ifstream &data, std::ifstream &results) {
+    if (argc != 4) {
+        std::cout << "Pass input and output files as arguments" << std::endl;
+        return FAILED;
+    } else {
+        data.open(argv[2]);
+        results.open(argv[3]);
+        if (!data.is_open() || !results.is_open()) {
+            std::cout << "Can't open file." << std::endl;
+            return FAILED;
+        }
+    }
+    return SUCCESS;
+}
 
 Graph *loadData(std::ifstream &input) {
     uint vertices, edges, v1, v2;
@@ -17,72 +33,26 @@ Graph *loadData(std::ifstream &input) {
     return graph;
 }
 
-uint DFSBridge(uint v, int vf, Graph *graph, std::vector<uint> &D, uint cv, std::vector<puu> &bridges) {
-    D[v] = cv;
-    uint low = cv++;
-    for (auto &el : graph->adjacencyMatrix[v]) {
-        if (el != vf) {
-            if (D[el] == 0) {
-                uint temp = DFSBridge(el, v, graph, D, cv, bridges);
-                if (temp < low)
-                    low = temp;
-            } else {
-                if (D[el] < low)
-                    low = D[el];
-            }
-        }
-    }
-
-    if (vf > -1 && low == D[v])
-        bridges.emplace_back(std::make_pair(vf, v));
-
-    return low;
-}
-
-std::vector<std::pair<uint, uint>> runAlgorithm(Graph *graph) {
-    std::vector<puu> bridges;
-    std::vector<uint> D(graph->vertices);
-    uint cv = 1;
-
-    DFSBridge(0, -1, graph, D, cv, bridges);
-
-    return bridges;
-}
-
-void compareResults(std::ifstream &results, std::vector<puu> &bridges) {
+bool compareResults(std::ifstream &results, std::vector<puu> &bridges) {
     uint v1, v2, it = 0;
     std::sort(bridges.begin(), bridges.end());
     while (results >> v1 && results >> v2) {
-        if (bridges[it].first != v1 || bridges[it++].second != v2) {
-            std::cout << "failed" << std::endl;
-            return;
-        }
+        if (bridges[it].first != v1 || bridges[it++].second != v2)
+            return false;
     }
-    if (it != bridges.size())
-        std::cout << "failed" << std::endl;
-    else
-        std::cout << "success" << std::endl;
+
+    return it == bridges.size();
 }
 
+// argv[1]- test no., argv[2]- input filename, argv[3]- result filename
 int main(int argc, char **argv) {
-    std::ifstream data;
-    std::ifstream results;
-
-    if (argc != 3) {
-        std::cout << "Pass input and output files as arguments" << std::endl;
-        return -1;
-    } else {
-        data.open(argv[1]);
-        results.open(argv[2]);
-        if (!data.is_open() || !results.is_open()) {
-            std::cout << "Can't open file." << std::endl;
-            return -2;
-        }
+    std::ifstream data, results;
+    if (openFiles(argc, argv, data, results) == SUCCESS) {
+        auto graph = loadData(data);
+        std::vector<puu> bridges;
+        std::vector<uint> D(graph->vertices);
+        graph->DFSBridge(0, -1, D, 1, bridges);
+        std::cout << "test " << argv[1] << ": " << compareResults(results, bridges) << std::endl;
     }
-
-    auto graph = loadData(data);
-    auto bridges = runAlgorithm(graph);
-    compareResults(results, bridges);
-
     return 0;
 }

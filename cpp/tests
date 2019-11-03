@@ -1,0 +1,8 @@
+#!/bin/bash
+path=../examples/
+for f in {0..2}
+do
+    in="${path}in${f}"
+    out="${path}out${f}"
+    .//cmake-build-debug/cpp $f $in $out
+done
