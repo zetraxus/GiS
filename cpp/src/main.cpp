@@ -16,8 +16,8 @@ Graph *loadData(std::ifstream &input) {
     return graph;
 }
 
-uint DFSBridge(uint v, uint vf, Graph *graph, std::vector<uint> &D, uint cv, std::vector<puu> &bridges) {
-    std::cout<<"#" << std::endl;
+uint DFSBridge(uint v, int vf, Graph *graph, std::vector<uint> &D, uint cv, std::vector<puu> &bridges) {
+//    std::cout<<"#" << std::endl;
     D[v] = cv;
     uint low = cv++;
     uint temp;
@@ -34,6 +34,7 @@ uint DFSBridge(uint v, uint vf, Graph *graph, std::vector<uint> &D, uint cv, std
         }
     }
 
+//    std::cout << v << " " << vf << " " << D[v] << " " << low << std::endl;
     if (vf > -1 && low == D[v])
         bridges.emplace_back(std::make_pair(vf, v));
 
@@ -47,10 +48,11 @@ std::vector<std::pair<uint, uint>> &runAlgorithm(Graph *graph) {
     uint vf;
 
     uint start = 1;
-    DFSBridge(start, start, graph, D, cv, bridges);
+    DFSBridge(0, -1, graph, D, cv, bridges);
 
+//    std::cout <<"wynik" <<std::endl;
     for (auto &el : bridges)
-        std::cout<< el.first << " " << el.second;
+        std::cout<< el.first << " " << el.second << std::endl;
 }
 
 int main(int argc, char **argv) {
