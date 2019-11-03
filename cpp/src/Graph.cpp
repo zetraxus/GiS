@@ -4,10 +4,10 @@
 
 #include "Graph.h"
 
-Graph::Graph(unsigned vertices, unsigned edges) : vertices(vertices), edges(edges) {
+Graph::Graph(uint vertices, uint edges) : vertices(vertices), edges(edges) {
     adjacencyMatrix.reserve(vertices);
 }
 
-void Graph::addEdge(unsigned v1, unsigned v2) {
+void Graph::addEdge(uint v1, uint v2) {
     adjacencyMatrix[v1].push_back(v2);
 }

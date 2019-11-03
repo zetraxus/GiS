@@ -7,16 +7,15 @@
 
 
 #include <vector>
+#include <sys/param.h>
 
-class Graph {
-    const unsigned vertices;
-    const unsigned edges;
+struct Graph {
+    const uint vertices;
+    const uint edges;
+    std::vector<std::vector<uint>> adjacencyMatrix;
 
-    std::vector<std::vector<unsigned>> adjacencyMatrix;
-
-public:
-    Graph(unsigned vertices, unsigned edges);
-    void addEdge(unsigned v1, unsigned v2);
+    Graph(uint vertices, uint edges);
+    void addEdge(uint v1, uint v2);
 };
 
 
