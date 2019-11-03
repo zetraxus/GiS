@@ -15,12 +15,14 @@ struct Graph {
     const uint vertices;
     const uint edges;
     std::vector<std::vector<uint>> adjacencyMatrix;
+    std::vector<puu> bridges;
+    std::vector<uint> D;
 
     Graph(uint vertices, uint edges);
 
     void addEdge(uint v1, uint v2);
 
-    uint DFSBridge(uint v, int vf, std::vector<uint> &D, uint cv, std::vector<puu> &bridges);
+    uint DFSBridge(uint v, int vf, uint cv);
 };
 
 

@@ -49,10 +49,11 @@ int main(int argc, char **argv) {
     std::ifstream data, results;
     if (openFiles(argc, argv, data, results) == SUCCESS) {
         auto graph = loadData(data);
-        std::vector<puu> bridges;
-        std::vector<uint> D(graph->vertices);
-        graph->DFSBridge(0, -1, D, 1, bridges);
-        std::cout << "test " << argv[1] << ": " << compareResults(results, bridges) << std::endl;
+        for (uint v = 0; v < graph->vertices; ++v) {
+            if (graph->D[v] == 0)
+                graph->DFSBridge(v, -1, 1);
+        }
+        std::cout << "test " << argv[1] << ": " << compareResults(results, graph->bridges) << std::endl;
     }
     return 0;
 }

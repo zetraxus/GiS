@@ -1,6 +1,6 @@
 #!/bin/bash
 path=../examples/
-for f in {0..2}
+for f in {0..9}
 do
     in="${path}in${f}"
     out="${path}out${f}"
