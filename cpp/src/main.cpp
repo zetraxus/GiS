@@ -6,7 +6,7 @@
 const uint SUCCESS = 1;
 const uint FAILED = 0;
 
-int openFiles(int argc, char **argv, std::ifstream &data, std::ifstream &results) {
+bool openFiles(int argc, char **argv, std::ifstream &data, std::ifstream &results) {
     if (argc != 4) {
         std::cout << "Pass input and output files as arguments" << std::endl;
         return FAILED;
@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
         auto graph = loadData(data);
         for (uint v = 0; v < graph->vertices; ++v) {
             if (graph->D[v] == 0)
-                graph->DFSBridge(v, -1, 1);
+                graph->DFSBridge(v, -1);
         }
         std::cout << "test " << argv[1] << ": " << compareResults(results, graph->bridges) << std::endl;
     }
