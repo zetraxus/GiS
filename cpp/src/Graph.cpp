@@ -13,13 +13,13 @@ void Graph::addEdge(uint v1, uint v2) {
     adjacencyMatrix[v1].push_back(v2);
 }
 
-uint Graph::DFSBridge(uint v, int vf, uint cv) {
+uint Graph::DFSBridge(uint v, int vf) {
     D[v] = cv;
     uint low = cv++;
     for (auto el : adjacencyMatrix[v]) {
         if (el != vf) {
             if (D[el] == 0) {
-                uint temp = this->DFSBridge(el, v, cv);
+                uint temp = this->DFSBridge(el, v);
                 if (temp < low)
                     low = temp;
             } else {
