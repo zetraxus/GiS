@@ -1,0 +1,9 @@
+#!/bin/bash
+rm ../examples/generate/*
+mkdir compile
+cd compile
+cmake ../../cpp
+make
+./generator
+cd ..
+rm -rf compile

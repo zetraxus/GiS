@@ -2,6 +2,7 @@
 // Created by adam on 02.11.2019.
 //
 
+#include <iostream>
 #include "Graph.h"
 
 Graph::Graph(uint vertices, uint edges) : vertices(vertices), edges(edges) {
@@ -33,4 +34,13 @@ uint Graph::DFSBridge(uint v, int vf) {
         bridges.emplace_back(std::make_pair(vf, v));
 
     return low;
+}
+
+void Graph::print() {
+    std::cout<< vertices << " " << edges << std::endl;
+    for (uint v1 = 0; v1 < adjacencyMatrix.size(); ++v1){
+        for(auto& v2 : adjacencyMatrix[v1]){
+            std::cout << v1 << " " << v2 << std::endl;
+        }
+    }
 }

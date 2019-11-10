@@ -1,0 +1,22 @@
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
+  )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/adam/Pulpit/projekty/GiS/generator/Generator.cpp" "/home/adam/Pulpit/projekty/GiS/generator/compile/CMakeFiles/generator.dir/home/adam/Pulpit/projekty/GiS/generator/Generator.cpp.o"
+  "/home/adam/Pulpit/projekty/GiS/generator/main.cpp" "/home/adam/Pulpit/projekty/GiS/generator/compile/CMakeFiles/generator.dir/home/adam/Pulpit/projekty/GiS/generator/main.cpp.o"
+  "/home/adam/Pulpit/projekty/GiS/cpp/src/Graph.cpp" "/home/adam/Pulpit/projekty/GiS/generator/compile/CMakeFiles/generator.dir/src/Graph.cpp.o"
+  )
+set(CMAKE_CXX_COMPILER_ID "GNU")
+
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  )
+
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")
