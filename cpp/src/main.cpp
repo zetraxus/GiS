@@ -25,7 +25,7 @@ bool openFiles(int argc, char **argv, std::ifstream &data, std::ifstream &result
 std::unique_ptr<Graph> loadData(std::ifstream &input) {
     uint vertices, edges, v1, v2;
     input >> vertices >> edges;
-    std::unique_ptr<Graph> graph (new Graph(vertices, edges));
+    std::unique_ptr<Graph> graph(new Graph(vertices, edges));
     for (uint edge = 0; edge < edges; ++edge) {
         input >> v1 >> v2;
         graph->addEdge(v1, v2);

@@ -1,9 +1,10 @@
 #!/bin/bash
-rm ../examples/generate/*
-mkdir compile
-cd compile
+path=generator/compile
+rm examples/generate/*
+mkdir $path
+cd $path
 cmake ../../cpp
 make
 ./generator
-cd ..
-rm -rf compile
+cd ../../
+rm -rf $path

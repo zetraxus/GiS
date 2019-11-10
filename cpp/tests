@@ -1,14 +1,15 @@
 #!/bin/bash
-mkdir compile
-cd compile
+path=cpp/compile
+mkdir $path
+cd $path
 cmake ..
 make
-path=../../examples/
+examples=../../examples/
 for f in {0..9}
 do
-    in="${path}in${f}"
-    out="${path}out${f}"
+    in="${examples}in${f}"
+    out="${examples}out${f}"
     ./cpp $f $in $out
 done
-cd ..
-rm -rf compile
+cd ../../
+rm -rf $path

@@ -15,7 +15,8 @@ class Generator {
 
     void generate(uint v, uint e);
 
-    void saveToFile(uint v, uint e, const std::set<std::pair<uint, uint>>& edges);
+    void saveToFile(uint v, uint e, const std::set<std::pair<uint, uint>> &edges);
+
 public:
     void generateGraphs();
 };

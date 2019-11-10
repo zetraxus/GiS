@@ -37,9 +37,9 @@ uint Graph::DFSBridge(uint v, int vf) {
 }
 
 void Graph::print() {
-    std::cout<< vertices << " " << edges << std::endl;
-    for (uint v1 = 0; v1 < adjacencyMatrix.size(); ++v1){
-        for(auto& v2 : adjacencyMatrix[v1]){
+    std::cout << vertices << " " << edges << std::endl;
+    for (uint v1 = 0; v1 < adjacencyMatrix.size(); ++v1) {
+        for (auto &v2 : adjacencyMatrix[v1]) {
             std::cout << v1 << " " << v2 << std::endl;
         }
     }
