@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/cpp.dir/src/main.cpp.o CMakeFiles/cpp.dir/src/Graph.cpp.o CMakeFiles/cpp.dir/home/adam/Pulpit/projekty/GiS/generator/Generator.cpp.o  -o cpp 

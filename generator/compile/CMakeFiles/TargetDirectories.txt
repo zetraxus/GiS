@@ -1,3 +1,0 @@
-/home/adam/Pulpit/projekty/GiS/generator/compile/CMakeFiles/rebuild_cache.dir
-/home/adam/Pulpit/projekty/GiS/generator/compile/CMakeFiles/cpp.dir
-/home/adam/Pulpit/projekty/GiS/generator/compile/CMakeFiles/edit_cache.dir
