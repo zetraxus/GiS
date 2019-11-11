@@ -3,14 +3,13 @@
 //
 
 #include "Generator.h"
-#include <random>
 #include <set>
 #include <iostream>
 #include <fstream>
 
 void Generator::saveToFile(uint v, uint e, const std::set<std::pair<uint, uint>> &edges) {
     std::ofstream output;
-    std::string filename = "../../examples/generate/in" + std::to_string(generated);
+    std::string filename = path + std::to_string(generated);
     output.open(filename);
     if (output.is_open()) {
         output << v << " " << e << std::endl;
@@ -22,9 +21,7 @@ void Generator::saveToFile(uint v, uint e, const std::set<std::pair<uint, uint>>
 
 void Generator::generate(uint v, uint e) {
     std::set<std::pair<uint, uint>> edges;
-
-    std::random_device rd;  //Will be used to obtain a seed for the random number engine
-    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, v - 1);
 
     while (edges.size() != e) {
@@ -41,9 +38,6 @@ void Generator::generate(uint v, uint e) {
 }
 
 void Generator::generateGraphs() {
-    std::vector<uint> vertices = {10, 100, 1000};
-    std::vector<float> density = {0.25, 0.5, 0.75};
-    uint graphs = 3;
     for (auto &v : vertices) {
         for (auto &d : density) {
             uint e = v * (v - 1) / 2 * d;
