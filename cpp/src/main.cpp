@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <memory>
 #include "Graph.h"
 
 const uint SUCCESS = 1;
@@ -21,16 +22,16 @@ bool openFiles(int argc, char **argv, std::ifstream &data, std::ifstream &result
     return SUCCESS;
 }
 
-Graph *loadData(std::ifstream &input) {
+std::unique_ptr<Graph> loadData(std::ifstream &input) {
     uint vertices, edges, v1, v2;
     input >> vertices >> edges;
-    auto graph = new Graph(vertices, edges);
+    std::unique_ptr<Graph> graph(new Graph(vertices, edges));
     for (uint edge = 0; edge < edges; ++edge) {
         input >> v1 >> v2;
         graph->addEdge(v1, v2);
         graph->addEdge(v2, v1);
     }
-    return graph;
+    return std::move(graph);
 }
 
 bool compareResults(std::ifstream &results, std::vector<puu> &bridges) {

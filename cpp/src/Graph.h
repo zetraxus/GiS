@@ -24,6 +24,8 @@ struct Graph {
     void addEdge(uint v1, uint v2);
 
     uint DFSBridge(uint v, int vf);
+
+    void print();
 };
 
 
