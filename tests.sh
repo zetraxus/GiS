@@ -31,6 +31,9 @@ do
     action
     while [ $avg -ne $avg_one_loop_before ] ; do
         action
+        echo $avg_one_loop_before
+        echo $avg
+        echo 'delta (in microseconds)' $(($avg_one_loop_before-$avg)) | sed 's/-//'
     done
     echo 'iteration= ' $iteration
     echo $directory ' avg=' $avg
