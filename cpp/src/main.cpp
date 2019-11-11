@@ -2,19 +2,19 @@
 #include <fstream>
 #include <algorithm>
 #include <memory>
+#include <chrono>
 #include "Graph.h"
 
 const uint SUCCESS = 1;
 const uint FAILED = 0;
 
-bool openFiles(int argc, char **argv, std::ifstream &data, std::ifstream &results) {
-    if (argc != 4) {
-        std::cout << "Pass input and output files as arguments" << std::endl;
+bool openFile(int argc, char **argv, std::ifstream &data) {
+    if (argc != 2) {
+        std::cout << "Pass input file as argument" << std::endl;
         return FAILED;
     } else {
-        data.open(argv[2]);
-        results.open(argv[3]);
-        if (!data.is_open() || !results.is_open()) {
+        data.open(argv[1]);
+        if (!data.is_open()) {
             std::cout << "Can't open file." << std::endl;
             return FAILED;
         }
@@ -45,16 +45,17 @@ bool compareResults(std::ifstream &results, std::vector<puu> &bridges) {
     return it == bridges.size();
 }
 
-// argv[1]- test no., argv[2]- input filename, argv[3]- result filename
 int main(int argc, char **argv) {
-    std::ifstream data, results;
-    if (openFiles(argc, argv, data, results) == SUCCESS) {
+    std::ifstream data;
+    if (openFile(argc, argv, data) == SUCCESS) {
         auto graph = loadData(data);
+        auto start = std::chrono::steady_clock::now();
         for (uint v = 0; v < graph->vertices; ++v) {
             if (graph->D[v] == 0)
                 graph->DFSBridge(v, -1);
         }
-        std::cout << "test " << argv[1] << ": " << compareResults(results, graph->bridges) << std::endl;
+        auto end = std::chrono::steady_clock::now();
+        std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << std::endl;
     }
     return 0;
 }

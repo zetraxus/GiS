@@ -1,6 +1,6 @@
 #!/bin/bash
 path=generator/compile
-rm examples/generate/*
+rm -rf examples/generate/*
 mkdir $path
 cd $path
 cmake ../../cpp

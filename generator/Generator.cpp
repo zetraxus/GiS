@@ -6,6 +6,8 @@
 #include <set>
 #include <iostream>
 #include <fstream>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 void Generator::saveToFile(uint v, uint e, const std::set<std::pair<uint, uint>> &edges) {
     std::ofstream output;
@@ -41,6 +43,10 @@ void Generator::generateGraphs() {
     for (auto &v : vertices) {
         for (auto &d : density) {
             uint e = v * (v - 1) / 2 * d;
+
+            path = base_path + "_" + std::to_string(v) + "_" + std::to_string(d) + "/";
+            mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+
             for (uint g = 0; g < graphs; ++g) {
                 std::cout << "Progress " << generated << "/" << vertices.size() * density.size() * graphs << std::endl;
                 generate(v, e);

@@ -16,7 +16,8 @@ class Generator {
     const std::vector<uint> vertices = {10, 100, 1000};
     const std::vector<float> density = {0.25, 0.5, 0.75};
     const uint graphs = 3;
-    const std::string path = "../../examples/generate/in";
+    const std::string base_path = "../../examples/generate/in";
+    std::string path;
     std::random_device rd;
     uint generated = 0;
 
