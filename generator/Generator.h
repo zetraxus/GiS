@@ -14,7 +14,6 @@
 
 class Generator {
     const std::vector<uint> vertices = {1000, 2500, 5000, 7500, 10000};
-    const std::vector<uint> bridges = {1, 25, 100};
     const std::vector<float> density = {0.02, 0.1, 0.3, 0.6};
     const uint graphs = 2;
 //    const uint graphs = 1000; uncomment it later
@@ -22,9 +21,9 @@ class Generator {
     std::random_device rd;
     uint generated = 0;
 
-    void generate(uint v, uint e, uint b, float d);
+    void generate(uint v, uint e, float d, uint it);
 
-    void saveToFile(uint v, uint e, uint b, float d, const std::set<std::pair<uint, uint>> &edges);
+    void saveToFile(uint v, uint e, float d, const std::set<std::pair<uint, uint>> &edges, uint it);
 
 public:
     void generateGraphs();
