@@ -13,17 +13,17 @@
 
 
 class Generator {
-    const std::vector<uint> vertices = {10, 100, 1000};
-    const std::vector<float> density = {0.25, 0.5, 0.75};
-    const uint graphs = 100;
-    const std::string base_path = "../../examples/generate/in";
-    std::string path;
+    const std::vector<uint> vertices = {500, 1000, 2500, 5000, 7500, 10000, 12500};
+    const std::vector<float> density = {0.01, 0.05, 0.1, 0.3, 0.6};
+    const uint graphs = 250;
+    const std::string base_path = "../../examples/";
+
     std::random_device rd;
     uint generated = 0;
 
-    void generate(uint v, uint e);
+    void generate(uint v, uint e, float d, uint it);
 
-    void saveToFile(uint v, uint e, const std::set<std::pair<uint, uint>> &edges);
+    void saveToFile(uint v, uint e, float d, const std::set<std::pair<uint, uint>> &edges, uint it);
 
 public:
     void generateGraphs();

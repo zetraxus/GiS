@@ -9,9 +9,11 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-void Generator::saveToFile(uint v, uint e, const std::set<std::pair<uint, uint>> &edges) {
+void Generator::saveToFile(uint v, uint e, float d, const std::set<std::pair<uint, uint>> &edges, uint it) {
     std::ofstream output;
-    std::string filename = path + std::to_string(generated);
+    std::string filename =
+        base_path + std::to_string(v) + '/' + std::to_string(d).substr(0, 4) + '/' + std::to_string(it);
+    std::cout << filename << std::endl;
     output.open(filename);
     if (output.is_open()) {
         output << v << " " << e << std::endl;
@@ -19,9 +21,10 @@ void Generator::saveToFile(uint v, uint e, const std::set<std::pair<uint, uint>>
             output << edge.first << " " << edge.second << std::endl;
     } else
         std::cerr << "Can't open file." << std::endl;
+    output.close();
 }
 
-void Generator::generate(uint v, uint e) {
+void Generator::generate(uint v, uint e, float d, uint it) {
     std::set<std::pair<uint, uint>> edges;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, v - 1);
@@ -35,7 +38,7 @@ void Generator::generate(uint v, uint e) {
             edges.insert(std::make_pair(v2, v1));
     }
 
-    saveToFile(v, e, edges);
+    saveToFile(v, e, d, edges, it);
     ++generated;
 }
 
@@ -43,15 +46,12 @@ void Generator::generateGraphs() {
     for (auto &v : vertices) {
         for (auto &d : density) {
             uint e = v * (v - 1) / 2 * d;
-
-            path = base_path + "_" + std::to_string(v) + "_" + std::to_string(d) + "/";
-            mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-
+            uint it = 0;
             for (uint g = 0; g < graphs; ++g) {
-                std::cout << "Progress " << generated << "/" << vertices.size() * density.size() * graphs << std::endl;
-                generate(v, e);
+                std::cout << "Progress " << generated << "/" << vertices.size() * density.size() * graphs << " ";
+                generate(v, e, d, it);
+                ++it;
             }
         }
     }
 }
-
