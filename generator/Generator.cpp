@@ -11,7 +11,8 @@
 
 void Generator::saveToFile(uint v, uint e, float d, const std::set<std::pair<uint, uint>> &edges, uint it) {
     std::ofstream output;
-    std::string filename = base_path + std::to_string(v) + '/' + std::to_string(d).substr(0,4) + '/' + std::to_string(it);
+    std::string filename =
+        base_path + std::to_string(v) + '/' + std::to_string(d).substr(0, 4) + '/' + std::to_string(it);
     std::cout << filename << std::endl;
     output.open(filename);
     if (output.is_open()) {
