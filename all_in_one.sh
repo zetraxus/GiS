@@ -1,5 +1,4 @@
 #!/bin/bash
 ./cpp/build.sh
-./generator/generate.sh
+#./generator/build.sh
 ./tests.sh
-
