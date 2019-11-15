@@ -1,6 +1,6 @@
 #!/bin/bash
 path=generator/compile
-rm -rf examples/*
+rm -rf examples
 mkdir examples
 
 vertices=( 500 1000 1500 2000 2500 )
@@ -13,10 +13,5 @@ for i in "${vertices[@]}"; do
   done
 done
 
-mkdir $path
 cd $path
-cmake ../../cpp
-make
 ./generator
-cd ../../
-rm -rf $path

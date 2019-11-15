@@ -1,12 +1,12 @@
 #!/bin/bash
 
-rm output.txt
+rm -f output.txt
 
 tarjan_algorithm_cpp=cpp/compile/cpp
 tarjan_algorithm_python=python/tarjan.py
 tarjan_algorithm_paths=($tarjan_algorithm_cpp $tarjan_algorithm_python)
 
-vertices=(500 1000 1500 2000 2500 )
+vertices=(500 1000 1500 2000 2500)
 density=(0.01 0.05 0.10 0.30 0.60)
 path_to_package=0
 current_implementation=0
@@ -25,8 +25,9 @@ run_all_tests_in_package() {
   avg=$(($all_time / $iteration))
 }
 
-for k in {1..5} ; do
-  echo $k
+for k in {1..10} ; do
+  dt=$(date '+%d/%m/%Y %H:%M:%S');
+  echo $k "$dt"
   ./generator/generate.sh
   for algorithm_path in "${tarjan_algorithm_paths[@]}"; do
     current_implementation=$algorithm_path
