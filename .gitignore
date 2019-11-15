@@ -3,3 +3,5 @@ cpp/.idea/
 cpp/cmake-build-debug/
 generator/compile
 cpp/compile
+examples/
+output.txt

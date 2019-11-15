@@ -1,16 +1,22 @@
 #!/bin/bash
-tarjan_algorithm=cpp/compile/cpp
 
-vertices=(500 1000 2500 5000 7500 10000 12500)
+rm -f output.txt
+
+tarjan_algorithm_cpp=cpp/compile/cpp
+tarjan_algorithm_python=python/tarjan.py
+tarjan_algorithm_paths=($tarjan_algorithm_cpp $tarjan_algorithm_python)
+
+vertices=(500 1000 1500 2000 2500)
 density=(0.01 0.05 0.10 0.30 0.60)
 path_to_package=0
+current_implementation=0
 
-run_all_test_in_package() {
+run_all_tests_in_package() {
   time=0
   iteration=$(expr $iteration + 1)
 
   for file in "$path_to_package"/*; do
-    a=$(./$tarjan_algorithm $file)
+    a=$(./$current_implementation $file)
     time=$(($time + $a))
   done
 
@@ -19,24 +25,29 @@ run_all_test_in_package() {
   avg=$(($all_time / $iteration))
 }
 
-for i in "${vertices[@]}"; do
-  for j in "${density[@]}"; do
-      path_to_package='examples'/$i/$j
+for k in {1..10} ; do
+  dt=$(date '+%d/%m/%Y %H:%M:%S');
+  echo $k "$dt"
+  ./generator/generate.sh
+  for algorithm_path in "${tarjan_algorithm_paths[@]}"; do
+    current_implementation=$algorithm_path
+    echo $current_implementation
+    for i in "${vertices[@]}"; do
+      for j in "${density[@]}"; do
+          path_to_package='examples'/$i/$j
 
-        iteration=0
-        all_time=0
-        avg_one_loop_before=0
-        avg=0
+            iteration=0
+            all_time=0
+            avg_one_loop_before=0
+            avg=0
 
-        run_all_test_in_package
-        run_all_test_in_package
-        while [ $avg -ne $avg_one_loop_before ]; do
-          run_all_test_in_package
-          echo $avg_one_loop_before
-          echo $avg
-          echo 'delta (in microseconds)' $(($avg_one_loop_before - $avg)) | sed 's/-//'
-        done
-        echo 'iteration= ' $iteration
-        echo $path_to_package ' avg=' $avg
+            run_all_tests_in_package
+            run_all_tests_in_package
+            while [ $avg -ne $avg_one_loop_before ]; do
+              run_all_tests_in_package
+            done
+            echo $current_implementation $path_to_package ' avg=' $avg 'iteration= ' $iteration >> output.txt
+      done
+    done
   done
 done
