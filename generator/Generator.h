@@ -12,18 +12,19 @@
 #include <random>
 
 
-class Generator {
+struct Generator {
     const std::vector<uint> vertices = {500, 1000, 1500, 2000, 2500};
     const std::vector<float> density = {0.01, 0.05, 0.1, 0.3, 0.6};
-    const uint graphs = 50;
-    const std::string base_path = "../../examples/";
+    const uint graphs = 10;
+    const std::string base_path = "examples/";
 
     std::random_device rd;
     uint generated = 0;
+    uint indexFirstGraph;
 
-    void generate(uint v, uint e, float d, uint it);
+    void generate(uint v, uint e, float d, uint g);
 
-    void saveToFile(uint v, uint e, float d, const std::set<std::pair<uint, uint>> &edges, uint it);
+    void saveToFile(uint v, uint e, float d, const std::set<std::pair<uint, uint>> &edges, uint g);
 
 public:
     void generateGraphs();

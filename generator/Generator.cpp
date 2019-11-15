@@ -9,10 +9,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-void Generator::saveToFile(uint v, uint e, float d, const std::set<std::pair<uint, uint>> &edges, uint it) {
+void Generator::saveToFile(uint v, uint e, float d, const std::set<std::pair<uint, uint>> &edges, uint g) {
     std::ofstream output;
     std::string filename =
-        base_path + std::to_string(v) + '/' + std::to_string(d).substr(0, 4) + '/' + std::to_string(it);
+        base_path + std::to_string(v) + '/' + std::to_string(d).substr(0, 4) + '/' + std::to_string(g + indexFirstGraph);
     std::cout << filename << std::endl;
     output.open(filename);
     if (output.is_open()) {
@@ -24,7 +24,7 @@ void Generator::saveToFile(uint v, uint e, float d, const std::set<std::pair<uin
     output.close();
 }
 
-void Generator::generate(uint v, uint e, float d, uint it) {
+void Generator::generate(uint v, uint e, float d, uint g) {
     std::set<std::pair<uint, uint>> edges;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, v - 1);
@@ -38,7 +38,7 @@ void Generator::generate(uint v, uint e, float d, uint it) {
             edges.insert(std::make_pair(v2, v1));
     }
 
-    saveToFile(v, e, d, edges, it);
+    saveToFile(v, e, d, edges, g);
     ++generated;
 }
 
@@ -46,11 +46,9 @@ void Generator::generateGraphs() {
     for (auto &v : vertices) {
         for (auto &d : density) {
             uint e = v * (v - 1) / 2 * d;
-            uint it = 0;
             for (uint g = 0; g < graphs; ++g) {
                 std::cout << "Progress " << generated << "/" << vertices.size() * density.size() * graphs << " ";
-                generate(v, e, d, it);
-                ++it;
+                generate(v, e, d, g);
             }
         }
     }

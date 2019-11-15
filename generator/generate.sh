@@ -12,6 +12,3 @@ for i in "${vertices[@]}"; do
     mkdir 'examples/'$i/$j
   done
 done
-
-cd $path
-./generator
