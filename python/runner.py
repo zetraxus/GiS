@@ -1,16 +1,18 @@
 import sys
+from timeit import default_timer
 
 from tarjan import TarjanAlgorithm
 
 
-def input_reader():
-    v = int(sys.stdin.readline().split(' ')[0])
-    graph = [[] for _ in range(v)]
-    for line in sys.stdin:
-        start, end = [int(e) for e in line.rsplit()]
-        graph[start].append(end)
-        graph[end].append(start)
-    return graph
+def input_reader(input_file):
+    with open(input_file, "r") as file:
+        v = int(file.readline().split(' ')[0])
+        graph = [[] for _ in range(v)]
+        for line in file:
+            start, end = [int(e) for e in line.rsplit()]
+            graph[start].append(end)
+            graph[end].append(start)
+        return graph
 
 
 def print_output(output):
@@ -20,7 +22,14 @@ def print_output(output):
 
 
 if __name__ == "__main__":
-    graph = input_reader()
+    if len(sys.argv) != 2:
+        raise Exception("Input file must be specific")
+
+    graph = input_reader(sys.argv[1])
     tarjan = TarjanAlgorithm(graph)
+
+    start = default_timer()
     tarjan.run()
-    print_output(tarjan.bridges)
+    end = default_timer()
+
+    print(int((end-start) * 1000000))  # microseconds, without fractional part
