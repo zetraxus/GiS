@@ -3,8 +3,10 @@
 //
 
 #include "Generator.h"
+#include <string>
 
 int main(int argc, char **argv) {
     Generator generator;
+    generator.indexFirstGraph = std::stoi(argv[1]);
     generator.generateGraphs();
 }

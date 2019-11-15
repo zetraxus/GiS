@@ -13,5 +13,5 @@ for i in "${vertices[@]}"; do
   done
 done
 
-cd $path
-./generator
+#cd $path
+#./generator
