@@ -27,28 +27,33 @@ run_all_tests_in_package() {
   diff=${diff#-}
 }
 
-for k in {1..10} ; do
-  dt=$(date '+%d/%m/%Y %H:%M:%S');
+print_date() {
+  dt=$(date '+%d/%m/%Y %H:%M:%S')
   echo $k "$dt"
-#  ./generator/generate.sh
+}
+
+for k in {1..10}; do
+  print_date
+  ./generator/generate.sh
+  print_date
   for algorithm_path in "${tarjan_algorithm_paths[@]}"; do
     current_implementation=$algorithm_path
     echo $current_implementation
     for i in "${vertices[@]}"; do
       for j in "${density[@]}"; do
-          path_to_package='examples'/$i/$j
+        path_to_package='examples'/$i/$j
 
-            iteration=0
-            all_time=0
-            avg_one_loop_before=0
-            avg=0
-            diff=0
-            run_all_tests_in_package
-            run_all_tests_in_package
-            while [ $iteration -lt 25 ] || [ $diff -gt 10 ]; do
-              run_all_tests_in_package
-            done
-            echo $k/10 $current_implementation $path_to_package ' avg=' $avg 'iteration= ' $iteration >> output.txt
+        iteration=0
+        all_time=0
+        avg_one_loop_before=0
+        avg=0
+        diff=0
+        run_all_tests_in_package
+        run_all_tests_in_package
+        while [ $iteration -lt 25 ] || [ $diff -gt 10 ]; do
+          run_all_tests_in_package
+        done
+        echo $k/10 $current_implementation $path_to_package ' avg=' $avg 'iteration= ' $iteration >>output.txt
       done
     done
   done
