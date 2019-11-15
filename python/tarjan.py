@@ -1,9 +1,9 @@
 
 
 class TarjanAlgorithm(object):
-    def __init__(self, graph):
-        self._graph = graph  # adjacency list
-        self._length = len(graph)
+    def __init__(self, adjacency_list):
+        self._graph = adjacency_list
+        self._length = len(adjacency_list)
         self._bridges = []
         self.clean()
 

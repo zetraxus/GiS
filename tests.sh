@@ -2,9 +2,9 @@
 
 rm -f output.txt
 
-tarjan_algorithm_cpp=cpp/compile/cpp
-tarjan_algorithm_python=python/tarjan.py
-tarjan_algorithm_paths=($tarjan_algorithm_cpp $tarjan_algorithm_python)
+tarjan_algorithm_cpp=./cpp/compile/cpp
+tarjan_algorithm_python="python3 python/runner.py"
+tarjan_algorithm_paths=($tarjan_algorithm_cpp "$tarjan_algorithm_python")
 
 vertices=(500 1000 1500 2000 2500)
 density=(0.01 0.05 0.10 0.30 0.60)
@@ -16,7 +16,7 @@ run_all_tests_in_package() {
   iteration=$(expr $iteration + 1)
 
   for file in "$path_to_package"/*; do
-    a=$(./$current_implementation $file)
+    a=$($current_implementation $file)
     time=$(($time + $a))
   done
 
