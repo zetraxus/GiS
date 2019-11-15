@@ -50,10 +50,7 @@ int main(int argc, char **argv) {
     if (openFile(argc, argv, data) == SUCCESS) {
         auto graph = loadData(data);
         auto start = std::chrono::steady_clock::now();
-        for (uint v = 0; v < graph->vertices; ++v) {
-            if (graph->D[v] == 0)
-                graph->DFSBridge(v, -1);
-        }
+        graph->run();
         auto end = std::chrono::steady_clock::now();
         std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << std::endl;
     }

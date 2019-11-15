@@ -36,6 +36,15 @@ uint Graph::DFSBridge(uint v, int vf) {
     return low;
 }
 
+void Graph::run(){
+    for (uint v = 0; v < vertices; ++v) {
+        if (D[v] == 0){
+            cv = 1;
+            DFSBridge(v, -1);
+        }
+    }
+}
+
 void Graph::print() {
     std::cout << vertices << " " << edges << std::endl;
     for (uint v1 = 0; v1 < adjacencyMatrix.size(); ++v1) {
