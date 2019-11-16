@@ -28,7 +28,7 @@ run_all_tests_in_package() {
   diff=${diff#-}
   diff=$((1000 * $diff))
   diff=$(($diff / $avg))
-  echo $avg_one_loop_before $avg $diff
+#  echo $avg_one_loop_before $avg $diff
 }
 
 print_date() {
@@ -36,14 +36,24 @@ print_date() {
   echo $k "$dt"
 }
 
+generate_graphs() {
+  ./generator/generate.sh
+  args="0 10 20 30 40"
+  pids=""
+  for arg in $args; do
+    $generate_data $arg &
+    pids+="$! "
+  done
+
+  # wait for all pids
+  for pid in $pids; do
+    wait $pid
+  done
+}
+
 for k in {1..10}; do
   print_date
-  ./generator/generate.sh
-  $generate_data 0 &
-  $generate_data 10 &
-  $generate_data 20 &
-  $generate_data 30 &
-  $generate_data 40 &
+  generate_graphs
   for algorithm_path in "${tarjan_algorithm_paths[@]}"; do
     current_implementation=$algorithm_path
     echo $current_implementation
