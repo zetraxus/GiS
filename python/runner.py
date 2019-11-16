@@ -25,6 +25,7 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         raise Exception("Input file must be specific")
 
+    sys.setrecursionlimit(4*sys.getrecursionlimit())
     graph = input_reader(sys.argv[1])
     tarjan = TarjanAlgorithm(graph)
 
