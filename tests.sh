@@ -4,7 +4,7 @@ rm -f output.txt
 
 tarjan_algorithm_cpp=./cpp/compile/cpp
 tarjan_algorithm_python="python3 python/runner.py"
-tarjan_algorithm_paths=($tarjan_algorithm_cpp "$tarjan_algorithm_python")
+tarjan_algorithm_paths=("$tarjan_algorithm_python" $tarjan_algorithm_cpp)
 generate_data=./generator/compile/generator
 
 vertices=(500 1000 1500 2000 2500)
@@ -39,7 +39,11 @@ print_date() {
 for k in {1..10}; do
   print_date
   ./generator/generate.sh
-  $generate_data 0 & $generate_data 10 & $generate_data 20 & $generate_data 30 & $generate_data 40 &
+  $generate_data 0 &
+  $generate_data 10 &
+  $generate_data 20 &
+  $generate_data 30 &
+  $generate_data 40 &
   for algorithm_path in "${tarjan_algorithm_paths[@]}"; do
     current_implementation=$algorithm_path
     echo $current_implementation
