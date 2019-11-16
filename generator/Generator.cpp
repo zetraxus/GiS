@@ -47,7 +47,8 @@ void Generator::generateGraphs() {
         for (auto &d : density) {
             uint e = v * (v - 1) / 2 * d;
             for (uint g = 0; g < graphs; ++g) {
-                std::cout << "Progress " << generated << "/" << vertices.size() * density.size() * graphs << " ";
+                if (generated == 249)
+                    std::cout << "Progress " << generated << "/" << vertices.size() * density.size() * graphs << " ";
                 generate(v, e, d, g);
             }
         }

@@ -4,7 +4,7 @@ rm -f output.txt
 
 tarjan_algorithm_cpp=./cpp/compile/cpp
 tarjan_algorithm_python="python3 python/runner.py"
-tarjan_algorithm_paths=($tarjan_algorithm_cpp "$tarjan_algorithm_python")
+tarjan_algorithm_paths=("$tarjan_algorithm_python" $tarjan_algorithm_cpp)
 generate_data=./generator/compile/generator
 
 vertices=(500 1000 1500 2000 2500)
@@ -26,6 +26,9 @@ run_all_tests_in_package() {
   avg=$(($all_time / $iteration))
   diff=$(($avg - $avg_one_loop_before))
   diff=${diff#-}
+  diff=$((1000 * $diff))
+  diff=$(($diff / $avg))
+  echo $avg_one_loop_before $avg $diff
 }
 
 print_date() {
@@ -36,15 +39,18 @@ print_date() {
 for k in {1..10}; do
   print_date
   ./generator/generate.sh
-  $generate_data 0 & $generate_data 10 & $generate_data 20 & $generate_data 30 & $generate_data 40
-  print_date
+  $generate_data 0 &
+  $generate_data 10 &
+  $generate_data 20 &
+  $generate_data 30 &
+  $generate_data 40 &
   for algorithm_path in "${tarjan_algorithm_paths[@]}"; do
     current_implementation=$algorithm_path
     echo $current_implementation
     for i in "${vertices[@]}"; do
       for j in "${density[@]}"; do
         path_to_package='examples'/$i/$j
-
+        print_date
         iteration=0
         all_time=0
         avg_one_loop_before=0
@@ -52,7 +58,7 @@ for k in {1..10}; do
         diff=0
         run_all_tests_in_package
         run_all_tests_in_package
-        while [ $iteration -lt 25 ] || [ $diff -gt 10 ]; do
+        while [ $iteration -lt 15 ] || [ $diff -gt 0 ]; do
           run_all_tests_in_package
         done
         echo $k/10 $current_implementation $path_to_package ' avg=' $avg 'iteration= ' $iteration >>output.txt
