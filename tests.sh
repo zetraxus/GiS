@@ -36,7 +36,7 @@ print_date() {
 }
 
 generate_graphs() {
-  ./generator/generate.sh
+  ./generator/prepare_directory_tree.sh
   args="0 10 20 30 40"
   pids=""
   for arg in $args; do
