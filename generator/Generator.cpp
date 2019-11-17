@@ -13,7 +13,7 @@ void Generator::saveToFile(uint v, uint e, float d, const std::set<std::pair<uin
     std::ofstream output;
     std::string filename =
         base_path + std::to_string(v) + '/' + std::to_string(d).substr(0, 4) + '/' + std::to_string(g + indexFirstGraph);
-    std::cout << filename << std::endl;
+//    std::cout << filename << std::endl;
     output.open(filename);
     if (output.is_open()) {
         output << v << " " << e << std::endl;

@@ -28,7 +28,6 @@ run_all_tests_in_package() {
   diff=${diff#-}
   diff=$((1000 * $diff))
   diff=$(($diff / $avg))
-#  echo $avg_one_loop_before $avg $diff
 }
 
 print_date() {
